@@ -21,7 +21,9 @@ from distutils.core import setup
 setup(
 	name="Templ",
 	version="0.1dev",
-	packages=[],
+	packages=["templ"],
+	author="Zachary Dziura",
+	author_email="zcdziura@gmail.com",
 	license="GPLv3",
 	long_description=open("README.md").read(),
 )
