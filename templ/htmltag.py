@@ -18,11 +18,20 @@
 
 class HtmlTag:
 	
-	"""Encapsulates an HTML tag."""
+	"""Object representation of an HTML tag.
+    
+    A very simple class that encapsulates an HTML tag. It doesn't do
+    much other than that, I'm afraid. At least not yet!
+    
+    """
 
 	name = ""
 	attributes = {}
-	id = ""
-	class_ = []
 	padding = 0 # How many tabs to add to the line beginning; used in formatting
 	text = ""
+    
+    def __init__(self, name, text = "", attributes = {}, padding = 0):
+        self.name = name
+        self.text = text
+        self.attributes = attributes
+        self.padding = padding
