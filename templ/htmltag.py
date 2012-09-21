@@ -29,9 +29,30 @@ class HtmlTag:
 	attributes = {}
 	padding = 0 # How many tabs to add to the line beginning; used in formatting
 	text = ""
+    child_elements = {}
+
     
     def __init__(self, name, text = "", attributes = {}, padding = 0):
         self.name = name
         self.text = text
         self.attributes = attributes
         self.padding = padding
+
+class BlockHtmlTag(HtmlTag):
+
+    """Object representation of a block-level HTML tag."""
+
+    _valid_tags = (
+        "article", "aside", "blockquote", "body", "br", "button",
+        "canvas", "caption", "col", "colgroup", "dd", "div", "dl", "dt",
+        "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1-6",
+        "header", "hgroup", "hr", "li", "map", "object", "ol", "output", "p",
+        "pre", "progress", "section", "table", "tbody", "textarea", "tfoot",
+        "th", "tr", "ul", "video"
+    )
+
+    def validate(self):
+        if self.name in _valid_tags:
+            return True
+        else:
+            pass
