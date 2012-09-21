@@ -27,22 +27,17 @@ class HtmlTag:
 
 	name = ""
 	attributes = {}
-	padding = 0 # How many tabs to add to the line beginning; used in formatting
 	text = ""
-    child_elements = {}
+	padding = 0 # How many tabs to add to the line beginning; used in formatting
+    child_elements = []
+    valid_tags = ()
 
     
-    def __init__(self, name, text = "", attributes = {}, padding = 0):
-        self.name = name
-        self.text = text
-        self.attributes = attributes
-        self.padding = padding
-
 class BlockHtmlTag(HtmlTag):
 
     """Object representation of a block-level HTML tag."""
 
-    _valid_tags = (
+    valid_tags = (
         "article", "aside", "blockquote", "body", "br", "button",
         "canvas", "caption", "col", "colgroup", "dd", "div", "dl", "dt",
         "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1-6",
@@ -51,8 +46,27 @@ class BlockHtmlTag(HtmlTag):
         "th", "tr", "ul", "video"
     )
 
+    def __init__(self, name, attributes = {}, text = "", padding = 0):
+        self.name = name
+        self.attributes = attributes
+        self.text = text
+        self.padding = padding
+
     def validate(self):
         if self.name in _valid_tags:
             return True
         else:
-            pass
+            raise InvalidTagError(self.name, self.name + " is not a valid HTML tag.")
+
+class InvalidTagError(Exception):
+    
+    """Error to be raised when given HTML tag isn't valid.
+    
+    Attributes:
+        expression -- The expression in which the error occured
+        message -- Explanation of the error
+    """
+
+    def __init__(self, expression, message):
+        self.expression = expression
+        self.message = message
