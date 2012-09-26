@@ -31,6 +31,9 @@ class HtmlTag:
 		self.text = ""
 		self.child_elements = []
 		self.valid_tags = ()
+		
+	def validate(self):
+		return
 
 class BlockHtmlTag(HtmlTag):
 
