@@ -33,7 +33,10 @@ class HtmlTag:
 		self.valid_tags = ()
 		
 	def validate(self):
-		return
+	    if self.name in self.valid_tags:
+	        return True
+	    else:
+	        raise InvalidTagError(self.name, self.name + " is not a valid HTML tag.")
 
 class BlockHtmlTag(HtmlTag):
 
@@ -59,13 +62,26 @@ class BlockHtmlTag(HtmlTag):
 		    "output", "p", "pre", "progress", "section", "table", "tbody",
 		    "textarea", "tfoot", "th", "tr", "ul", "video"
     	)
+    	
+class InlineHtmlTag(HtmlTag):
+	
+	"""Object representation of a block-level HTML tag.
+	
+	Attributes:
+		name -- The name of the HTML tag (img, span, etc)
+		attributes -- A list of HTML tag attributes
+		text -- The optional text accompanying the tag
+		
+	"""
+	
+	def __init__(self, name, attributes = {}, text = ""):
+		self.name = name
+		self.attributes = attributes
+		self.text = text
 
-    def validate(self):
-        if self.name in self.valid_tags:
-            return True
-        else:
-            raise InvalidTagError(self.name, self.name + " is not a valid HTML tag.")
-
+		self.valid_tags = (
+			# To be added...
+		)
 class InvalidTagError(Exception):
     
     """Error to be raised when given HTML tag isn't valid.
