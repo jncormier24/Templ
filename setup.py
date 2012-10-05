@@ -25,5 +25,5 @@ setup(
 	author="Zachary Dziura",
 	author_email="zcdziura@gmail.com",
 	license="GPLv3",
-	long_description=open("README.md").read(),
+	long_description=open("README.txt").read(),
 )
