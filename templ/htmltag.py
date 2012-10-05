@@ -29,8 +29,14 @@ class HtmlTag:
 	attributes = {}
 	text = ""
 	padding = 0 # How many tabs to add to the line beginning; used in formatting
-    child_elements = []
-    valid_tags = ()
+	child_elements = []
+	valid_tags = ()
+
+	def validate(self):
+		if self.name in valid_tags:
+			return True
+		else:
+			raise InvalidTagError(self.name, self.name + " is not a valid HTML tag.")
 
     
 class BlockHtmlTag(HtmlTag):
@@ -47,16 +53,32 @@ class BlockHtmlTag(HtmlTag):
     )
 
     def __init__(self, name, attributes = {}, text = "", padding = 0):
+		super().__init__()
+
         self.name = name
         self.attributes = attributes
         self.text = text
         self.padding = padding
 
-    def validate(self):
-        if self.name in _valid_tags:
-            return True
-        else:
-            raise InvalidTagError(self.name, self.name + " is not a valid HTML tag.")
+class InlineHtmlTag(HtmlTag):
+
+	"""Object representation of an inline-level HTML tag."""
+
+	valid_tags = (
+		"a", "abbr", "address", "area", "audio", "bm", "cite", "code", "del",
+		"details", "dfn", "command", "datalist", "em", "font", "i", "iframe",
+		"img", "input", "ins", "kbd", "label", "legend", "link", "mark",
+		"meter", "nav", "optgroup", "option", "q", "small", "select", "source",
+		"span", "strong", "sub", "summary", "sup", "tbody", "td", "time", "var"
+	)
+
+	def __init__(self, name, attributes = {}, text = "", padding = 0):
+		super().__init__()
+
+		self.name = name
+		self.attributes = attributes
+		self.text = text
+		self.padding = padding
 
 class InvalidTagError(Exception):
     
