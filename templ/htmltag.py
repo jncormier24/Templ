@@ -38,19 +38,29 @@ class HtmlTag:
 		else:
 			raise InvalidTagError(self.name, self.name + " is not a valid HTML tag.")
 
-    
+	def __init__(self):
+		self.name = ""
+		self.attributes = {}
+		self.text = ""
+		self.child_elements = []
+		self.valid_tags = ()
+		
+	def validate(self):
+	    if self.name in self.valid_tags:
+	        return True
+	    else:
+	        raise InvalidTagError(self.name, self.name + " is not a valid HTML tag.")
+
 class BlockHtmlTag(HtmlTag):
 
-    """Object representation of a block-level HTML tag."""
-
-    valid_tags = (
-        "article", "aside", "blockquote", "body", "br", "button",
-        "canvas", "caption", "col", "colgroup", "dd", "div", "dl", "dt",
-        "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1-6",
-        "header", "hgroup", "hr", "li", "map", "object", "ol", "output", "p",
-        "pre", "progress", "section", "table", "tbody", "textarea", "tfoot",
-        "th", "tr", "ul", "video"
-    )
+    """Object representation of a block-level HTML tag.
+    
+    Attributes:
+    	name -- The name of the HTML tag (head, body, etc)
+    	attributes -- A list of HTML tag attributes
+    	text -- The optional text accompanying the tag
+    	
+    """
 
     def __init__(self, name, attributes = {}, text = "", padding = 0):
 		super().__init__()
@@ -79,7 +89,16 @@ class InlineHtmlTag(HtmlTag):
 		self.attributes = attributes
 		self.text = text
 		self.padding = padding
-
+        
+        self.valid_tags = (
+		    "article", "aside", "blockquote", "body", "br", "button",
+		    "canvas", "caption", "col", "colgroup", "dd", "div", "dl", "dt",
+		    "embed", "fieldset", "figcaption", "figure", "footer", "form",
+		    "h1-6", "header", "hgroup", "hr", "li", "map", "object", "ol",
+		    "output", "p", "pre", "progress", "section", "table", "tbody",
+		    "textarea", "tfoot", "th", "tr", "ul", "video"
+    	)
+    	
 class InvalidTagError(Exception):
     
     """Error to be raised when given HTML tag isn't valid.

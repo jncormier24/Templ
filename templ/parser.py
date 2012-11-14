@@ -40,18 +40,37 @@ class Parser:
 
 class Tree:
 
-	"""A parser syntax tree."""
+	"""A parser syntax tree.
+	
+	The syntax tree is nothing more than an encapsulated dictionary. When
+	adding nodes to the tree, the node's name parameter is used as the tree's
+	key, while the node's dictionary of elements are used as the saved value.
+	"""
 
 	def __init__(self):
 		self.nodes = {}
 
 	def add_node(self, node):
-		"""Adds a node to the tree."""
+		"""Adds a node to the tree.
+		
+		Parameters:
+			Node - The node to be added to the tree.
+
+		Returns:
+			Void	
+		"""
 		
 		self.nodes[node.name] = node.elements
 
 	def remove_node(self, node):
-		"""If the node exists in the tree, remove it. Returns an error message otherwise."""
+		"""If the node exists in the tree, remove it. Returns an error message otherwise.
+		
+		Parameters:
+			Node - The node to be removed from the tree.
+
+		Returns:
+			Void
+		"""
 
 		if node.name in self.nodes:
 			del self.nodes[node.name]
@@ -60,7 +79,10 @@ class Tree:
 
 class Node:
 	
-	"""Element found within parser syntax tree."""
+	"""Element found within parser syntax tree.
+	
+	Nodes encapsulate 2 values: a name and a list of containing elements.
+	"""
 
 	def __init__(self, name, elements = {}):
 		self.name = name
