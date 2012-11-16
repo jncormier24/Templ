@@ -20,9 +20,15 @@ class HtmlTag:
 	
 	"""Object representation of an HTML tag.
     
-    A very simple class that encapsulates an HTML tag. It doesn't do
-    much other than that, I'm afraid. At least not yet!
-    
+    A very simple class that encapsulates an HTML tag.
+
+	Attributes:
+		name -- The name of the HTML tag
+		attributes -- A dict of the attributes associated with the tag
+		text -- Any text the tag displays
+		padding -- How many tabs to pad the tag with; used in formatting
+		child_elements -- A list of any child elements
+		valid_tags -- Tuple of valid HTML tags
     """
 
 	name = ""
@@ -33,10 +39,24 @@ class HtmlTag:
 	valid_tags = ()
 
 	def validate(self):
+		
+		"""Validates the proposed tag to verify it's a valid HTML tag.
+
+		If the HTML tag in question exists in the list of valid tags, then 
+		validate returns True, otherwise it returns False.
+
+		Parameters:
+			None
+
+		Returns:
+			True if valid HTML tag
+			False if not valid HTML tag
+
+		"""
 		if self.name in valid_tags:
 			return True
 		else:
-			raise InvalidTagError(self.name, self.name + " is not a valid HTML tag.")
+			return False
 
 	def __init__(self):
 		self.name = ""
@@ -45,21 +65,18 @@ class HtmlTag:
 		self.child_elements = []
 		self.valid_tags = ()
 		
-	def validate(self):
-	    if self.name in self.valid_tags:
-	        return True
-	    else:
-	        raise InvalidTagError(self.name, self.name + " is not a valid HTML tag.")
-
 class BlockHtmlTag(HtmlTag):
 
     """Object representation of a block-level HTML tag.
     
-    Attributes:
-    	name -- The name of the HTML tag (head, body, etc)
-    	attributes -- A list of HTML tag attributes
-    	text -- The optional text accompanying the tag
-    	
+	Attributes:
+		name -- The name of the HTML tag
+		attributes -- A dict of the attributes associated with the tag
+		text -- Any text the tag displays
+		padding -- How many tabs to pad the tag with; used in formatting
+		child_elements -- A list of any child elements
+		valid_tags -- Tuple of valid HTML tags
+
     """
 
     def __init__(self, name, attributes = {}, text = "", padding = 0):
@@ -70,17 +87,28 @@ class BlockHtmlTag(HtmlTag):
         self.text = text
         self.padding = padding
 
+        self.valid_tags = (
+		    "article", "aside", "blockquote", "body", "br", "button",
+		    "canvas", "caption", "col", "colgroup", "dd", "div", "dl", "dt",
+		    "embed", "fieldset", "figcaption", "figure", "footer", "form",
+		    "h1", "h2", "h3", "h4", "h5", "h6", "header", "hgroup", "hr", "li",
+			"map", "object", "ol", "output", "p", "pre", "progress", "section",
+			"table", "tbody", "textarea", "tfoot", "th", "tr", "ul", "video"
+		)
+
 class InlineHtmlTag(HtmlTag):
 
-	"""Object representation of an inline-level HTML tag."""
-
-	valid_tags = (
-		"a", "abbr", "address", "area", "audio", "bm", "cite", "code", "del",
-		"details", "dfn", "command", "datalist", "em", "font", "i", "iframe",
-		"img", "input", "ins", "kbd", "label", "legend", "link", "mark",
-		"meter", "nav", "optgroup", "option", "q", "small", "select", "source",
-		"span", "strong", "sub", "summary", "sup", "tbody", "td", "time", "var"
-	)
+	"""Object representation of an inline-level HTML tag.
+	
+	Attributes:
+		name -- The name of the HTML tag
+		attributes -- A dict of the attributes associated with the tag
+		text -- Any text the tag displays
+		padding -- How many tabs to pad the tag with; used in formatting
+		child_elements -- A list of any child elements
+		valid_tags -- Tuple of valid HTML tags
+	
+	"""
 
 	def __init__(self, name, attributes = {}, text = "", padding = 0):
 		super().__init__()
@@ -90,24 +118,11 @@ class InlineHtmlTag(HtmlTag):
 		self.text = text
 		self.padding = padding
         
-        self.valid_tags = (
-		    "article", "aside", "blockquote", "body", "br", "button",
-		    "canvas", "caption", "col", "colgroup", "dd", "div", "dl", "dt",
-		    "embed", "fieldset", "figcaption", "figure", "footer", "form",
-		    "h1-6", "header", "hgroup", "hr", "li", "map", "object", "ol",
-		    "output", "p", "pre", "progress", "section", "table", "tbody",
-		    "textarea", "tfoot", "th", "tr", "ul", "video"
-    	)
-    	
-class InvalidTagError(Exception):
-    
-    """Error to be raised when given HTML tag isn't valid.
-    
-    Attributes:
-        expression -- The expression in which the error occured
-        message -- Explanation of the error
-    """
-
-    def __init__(self, expression, message):
-        self.expression = expression
-        self.message = message
+		valid_tags = (
+			"a", "abbr", "address", "area", "audio", "bm", "cite", "code",
+			"del", "details", "dfn", "command", "datalist", "em", "font", "i",
+			"iframe",	"img", "input", "ins", "kbd", "label", "legend",
+			"link", "mark", "meter", "nav", "optgroup", "option", "q", "small",
+			"select", "source", "span", "strong", "sub", "summary", "sup",
+			"tbody", "td", "time", "var"
+		)
