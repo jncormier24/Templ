@@ -19,11 +19,14 @@
 from distutils.core import setup
 
 setup(
-	name="Templ",
-	version="0.1dev",
-	packages=["templ"],
-	author="Zachary Dziura",
-	author_email="zcdziura@gmail.com",
-	license="GPLv3",
-	long_description=open("README.txt").read(),
+	name='Templ',
+	version='0.1dev',
+	description='A beautiful, little HTML templating engine',
+	packages=['templ'],
+	scripts=['templ.conf'],
+	author='Zachary Dziura',
+	author_email='zcdziura@gmail.com',
+	license='GPLv3',
+	long_description=open('README.txt').read(),
+	install_requires = ['PyYAML >= 3.10'],
 )
