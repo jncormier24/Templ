@@ -16,13 +16,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import htmltag
+import re
 import yaml
 
 class Parser:
     """Parses .tmpl file to be outputted as an html file. """
-    def __init__(self, config_file = "templ.conf"):
+    def __init__(self, config_file = 'templ.conf'):
         config_file = config_file
-        self.tree = {}
+        self.tree = None
         self.rules = {}
         self._load_config(config_file)
 
@@ -30,16 +32,52 @@ class Parser:
         """Loads the configuration settings from the config_file."""
         with open(config_file, 'r') as config:
             self.rules = yaml.load(config)
-            print(self.rules)
 
-    def parse(self):
+    def parse(self, pray_file):
         """Parse the input file and output a syntax tree.
 
         Parameters:
-        input_file -- A string representing the config file name
-            If none exists, default to rules found in the Parser class
+        pray_file - The name of the pray file to be parsed.
         
         """
+        # Begin parsing the file
+        with open(pray_file, 'r') as input_file:
+            lines = []
+            # Read the entire file as a list of lines
+            for line in input_file:
+                line = line.strip('\n') # We don't want the newline
+                
+                # First, expand any variables found with their values
+                regex = re.compile(r'\$[a-zA-Z0-9-_]+')
+                results = regex.findall(line)
+                if len(results) > 0:
+                    results = [result.strip('$') for result in results]
+                print(results)
+                #for result in results:
+                    #line = regex.sub(self.rules[result], line)
+                    #print(regex.sub(self.rules[result], line))
+                print(line)
+                                    
+                # Second, determine if the line is nested
+                """
+                regex = re.compile(r'\s{4}')
+                if regex.match(line) != None:
+                    # If the line is nested, replace with literal '\t'
+                    line = regex.sub(r'\\t', line)
+                    print(line)
+                else:
+                    print(line)
+                
+                lines.append(line)"""
+                
+class NodeNotFoundError(Exception):
+    """Error to be thrown when node is not found in tree."""
+    def __init__(self, name):
+        self.name = name
+    
+    def __str__(self):
+        return repr(self.name)
+                
 class Tree:
     """A parser syntax tree.
     
@@ -48,10 +86,10 @@ class Tree:
     key, while the node's dictionary of elements are used as the saved value.
     """
     def __init__(self):
-        self.nodes = {}
+        self.root_node = None
 
     def add_node(self, node):
-        """Adds a node to the tree.
+        """Add a node to the tree.
         
         Parameters:
         Node - The node to be added to the tree.
@@ -62,27 +100,41 @@ class Tree:
         """        
         self.nodes[node.name] = node.elements
 
-    def remove_node(self, node):
-        """If the node exists in the tree, remove it. Returns an error message otherwise.
+    def remove_node(self, node_name):
+        """Remove the first node of a given name from the tree.
+        
+        If the node does not exist in the tree, return a NodeNotFoundError.
         
         Parameters:
-        Node - The node to be removed from the tree.
+        Node_Name - The name of the node to be removed from the tree.
 
         Returns:
         Void
             
         """
-        if node.name in self.nodes:
+        if node_name in self.nodes:
             del self.nodes[node.name]
         else:
-            print(node.name + " does not exist in the tree.")
+            raise NodeNotFoundError(node_name)
+            
+    def remove_nodes(self, node_name):
+        """Remove all nodes of a given name from the tree.
+        
+        If no nodes exist in the tree, return a NodeNotFoundError.
+        
+        Parameters:
+        Node_Name - The name of the notes to be removed from the tree.
+        
+        """
 
 class Node:    
     """Element found within parser syntax tree.
     
-    Nodes encapsulate 2 values: a name and a list of containing elements.
+    Nodes encapsulate 3 values: a name, a list of containing elements, and a
+    list of child elements.
     
     """
-    def __init__(self, name, elements = {}):
+    def __init__(self, name, attributes = {}, children = []):
         self.name = name
-        self.elements = elements
+        self.attributes = attributes
+        self.children = children

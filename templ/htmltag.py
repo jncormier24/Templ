@@ -23,12 +23,13 @@ class _HtmlTag:
     A very simple class that encapsulates an HTML tag.
 
     Attributes:
-    name -- The name of the HTML tag
-    attributes -- A dict of the attributes associated with the tag
-    text -- Any text the tag displays
-    padding -- How many tabs to pad the tag with; used in formatting
-    child_elements -- A list of any child elements
-    valid_tags -- Tuple of valid HTML tags
+    name - The name of the HTML tag
+    attributes - A dict of the attributes associated with the tag
+    text - Any text the tag displays
+    padding - How many tabs to pad the tag with; used in formatting
+    child_elements - A list of any child elements
+    valid_tags - Tuple of valid HTML tags
+    
     """
 
     name = ""
@@ -68,18 +69,16 @@ class BlockHtmlTag(_HtmlTag):
     """Object representation of a block-level HTML tag.
     
     Attributes:
-    name -- The name of the HTML tag
-    attributes -- A dict of the attributes associated with the tag
-    text -- Any text the tag displays
-    padding -- How many tabs to pad the tag with; used in formatting
-    child_elements -- A list of any child elements
-    valid_tags -- Tuple of valid HTML tags
+    name - The name of the HTML tag
+    attributes - A dict of the attributes associated with the tag
+    text - Any text the tag displays
+    padding - How many tabs to pad the tag with; used in formatting
+    child_elements - A list of any child elements
+    valid_tags - Tuple of valid HTML tags
 
     """
 
     def __init__(self, name, attributes = {}, text = "", padding = 0):
-        super().__init__()
-
         self.name = name
         self.attributes = attributes
         self.text = text
@@ -98,18 +97,16 @@ class InlineHtmlTag(_HtmlTag):
     """Object representation of an inline-level HTML tag.
     
     Attributes:
-    name -- The name of the HTML tag
-    attributes -- A dict of the attributes associated with the tag
-    text -- Any text the tag displays
-    padding -- How many tabs to pad the tag with; used in formatting
-    child_elements -- A list of any child elements
-    valid_tags -- Tuple of valid HTML tags
+    name - The name of the HTML tag
+    attributes - A dict of the attributes associated with the tag
+    text - Any text the tag displays
+    padding - How many tabs to pad the tag with; used in formatting
+    child_elements - A list of any child elements
+    valid_tags - Tuple of valid HTML tags
     
     """
 
     def __init__(self, name, attributes = {}, text = "", padding = 0):
-        super().__init__()
-
         self.name = name
         self.attributes = attributes
         self.text = text

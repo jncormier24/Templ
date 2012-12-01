@@ -30,3 +30,4 @@ pip-log.txt
 dist/*
 *.swp
 test.*
+*.conf
