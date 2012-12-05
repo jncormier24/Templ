@@ -1,4 +1,5 @@
+===== 
 Templ
 =====
 
-A simple HTML Templating engine written in Python.
+A beautifully simple HTML compiler written in Python.

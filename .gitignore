@@ -29,5 +29,3 @@ pip-log.txt
 # Everything Else
 dist/*
 *.swp
-test.*
-*.conf
