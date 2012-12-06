@@ -122,7 +122,6 @@ class Node:
     list of child elements.
     
     """
-    def __init__(self, name, attributes = {}, children = []):
-        self.name = name
-        self.attributes = attributes
+    def __init__(self, html_tag, children = []):
+        self.html_tag = html_tag
         self.children = children

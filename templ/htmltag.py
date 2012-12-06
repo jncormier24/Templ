@@ -65,6 +65,14 @@ class _HtmlTag:
         self.child_elements = []
         self.valid_tags = ()
         
+    def __str__(self):
+        begin_tag = '<' + self.name
+        end_tag = '</' + self.name + '>'
+        for attribute in self.attributes:
+            begin_tag += ' ' + attribute + '="' + self.attributes[attribute]\
+                + '"'
+        begin_tag += '>'
+        
 class BlockHtmlTag(_HtmlTag):
     """Object representation of a block-level HTML tag.
     
