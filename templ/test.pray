@@ -1,8 +1,8 @@
 $doctype
-html {lang: $lang}
-    head
-        meta {charset: $encoding}
-        title Hello World!
-    body
-        h1 {class: $test-class, foo: $bar} Hello world!
-        p {class: $bar} How are you today? [span {class: $test-class} This] is class is total foobar?
+    html {lang: $lang}
+        head
+            meta {charset: $encoding}
+            title Hello World!
+        body
+            h1 {class: $testclass, foo: $bar} Hello world!
+            p {class: $bar} How are you today? Is [span {class: $testclass} this] class total foobar?

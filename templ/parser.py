@@ -16,21 +16,22 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import htmltag
 import re
 import yaml
+
+import htmltag
 
 class Parser:
     """Parses .tmpl file to be outputted as an html file. """
     def __init__(self, config_file = 'templ.conf'):
-        config_file = config_file
+        self.config_file = config_file
         self.tree = None
         self.rules = {}
-        self._load_config(config_file)
+        self._load_config()
 
-    def _load_config(self, config_file):
+    def _load_config(self):
         """Loads the configuration settings from the config_file."""
-        with open(config_file, 'r') as config:
+        with open(self.config_file, 'r') as config:
             self.rules = yaml.load(config)
 
     def parse(self, pray_file):
@@ -42,34 +43,21 @@ class Parser:
         """
         # Begin parsing the file
         with open(pray_file, 'r') as input_file:
+            syntax_tree = Tree()
             lines = []
             # Read the entire file as a list of lines
             for line in input_file:
-                line = line.strip('\n') # We don't want the newline
+                line = line.strip('\n')
                 
-                # First, expand any variables found with their values
-                regex = re.compile(r'\$[a-zA-Z0-9-_]+')
-                results = regex.findall(line)
-                if len(results) > 0:
-                    results = [result.strip('$') for result in results]
-                print(results)
-                #for result in results:
-                    #line = regex.sub(self.rules[result], line)
-                    #print(regex.sub(self.rules[result], line))
+                # First, expand any variables found in the line
+                regex = re.compile(r'\$\w+')
+                matches = regex.findall(line)
+                if len(matches) > 0:
+                    for match in matches:
+                        replace = match.strip('$')
+                        line = line.replace(match, self.rules[replace])
                 print(line)
-                                    
-                # Second, determine if the line is nested
-                """
-                regex = re.compile(r'\s{4}')
-                if regex.match(line) != None:
-                    # If the line is nested, replace with literal '\t'
-                    line = regex.sub(r'\\t', line)
-                    print(line)
-                else:
-                    print(line)
-                
-                lines.append(line)"""
-                
+     
 class NodeNotFoundError(Exception):
     """Error to be thrown when node is not found in tree."""
     def __init__(self, name):
