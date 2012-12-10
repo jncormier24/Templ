@@ -32,9 +32,9 @@ class _HtmlTag:
     
     """
 
-    name = ""
+    name = ''
     attributes = {}
-    text = ""
+    text = ''
     padding = 0 # How many tabs to add to the line beginning; used in formatting
     child_elements = []
     valid_tags = ()
@@ -59,11 +59,16 @@ class _HtmlTag:
             return False
 
     def __init__(self):
-        self.name = ""
+        self.name = ''
         self.attributes = {}
-        self.text = ""
+        self.text = ''
         self.child_elements = []
         self.valid_tags = ()
+
+        self.void_tags = (
+            'area', 'base', 'br', 'col', 'command', 'embed', 'hr', 'img',
+            'input', 'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr'
+        )
         
     def __str__(self):
         begin_tag = '<' + self.name
@@ -86,19 +91,19 @@ class BlockHtmlTag(_HtmlTag):
 
     """
 
-    def __init__(self, name, attributes = {}, text = "", padding = 0):
+    def __init__(self, name, attributes = {}, text = '', padding = 0):
         self.name = name
         self.attributes = attributes
         self.text = text
         self.padding = padding
 
         self.valid_tags = (
-            "article", "aside", "blockquote", "body", "br", "button",
-            "canvas", "caption", "col", "colgroup", "dd", "div", "dl", "dt",
-            "embed", "fieldset", "figcaption", "figure", "footer", "form",
-            "h1", "h2", "h3", "h4", "h5", "h6", "header", "hgroup", "hr", "li",
-            "map", "object", "ol", "output", "p", "pre", "progress", "section",
-            "table", "tbody", "textarea", "tfoot", "th", "tr", "ul", "video"
+            'article', 'aside', 'blockquote', 'body', 'br', 'button',
+            'canvas', 'caption', 'col', 'colgroup', 'dd', 'div', 'dl', 'dt',
+            'embed', 'fieldset', 'figcaption', 'figure', 'footer', 'form',
+            'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'hgroup', 'hr', 'li',
+            'map', 'object', 'ol', 'output', 'p', 'pre', 'progress', 'section',
+            'table', 'tbody', 'textarea', 'tfoot', 'th', 'tr', 'ul', 'video'
         )
 
 class InlineHtmlTag(_HtmlTag):
@@ -114,17 +119,17 @@ class InlineHtmlTag(_HtmlTag):
     
     """
 
-    def __init__(self, name, attributes = {}, text = "", padding = 0):
+    def __init__(self, name, attributes = {}, text = '', padding = 0):
         self.name = name
         self.attributes = attributes
         self.text = text
         self.padding = padding
         
-        valid_tags = (
-            "a", "abbr", "address", "area", "audio", "bm", "cite", "code",
-            "del", "details", "dfn", "command", "datalist", "em", "font", "i",
-            "iframe",    "img", "input", "ins", "kbd", "label", "legend",
-            "link", "mark", "meter", "nav", "optgroup", "option", "q", "small",
-            "select", "source", "span", "strong", "sub", "summary", "sup",
-            "tbody", "td", "time", "var"
+        self.valid_tags = (
+            'a', 'abbr', 'address', 'area', 'audio', 'bm', 'cite', 'code',
+            'del', 'details', 'dfn', 'command', 'datalist', 'em', 'font', 'i',
+            'iframe', 'img', 'input', 'ins', 'kbd', 'label', 'legend', 'link',
+            'mark', 'meter', 'nav', 'optgroup', 'option', 'q', 'small',
+            'select', 'source', 'span', 'strong', 'sub', 'summary', 'sup',
+            'tbody', 'td', 'time', 'var'
         )

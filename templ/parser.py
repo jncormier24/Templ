@@ -56,7 +56,12 @@ class Parser:
                     for match in matches:
                         replace = match.strip('$')
                         line = line.replace(match, self.rules[replace])
-                print(line)
+                
+                # Second, turn the line into an HTML tag
+                if 'DOCTYPE' in line:
+                    print('Found')
+                else:
+                    print('Nope')
      
 class NodeNotFoundError(Exception):
     """Error to be thrown when node is not found in tree."""
